@@ -16,7 +16,6 @@ inputText.addEventListener("keypress", function (event) {
   if (event.key == 'Enter')
     searchBtn.click();
   durationInput.value = "";
-
 });
 
 durationInput.addEventListener("keypress", function (event) {
@@ -49,9 +48,9 @@ const showImages = (images) => {
       gallery.appendChild(div);
       toggleSpinner(false);
     })
-
   }
 }
+
 const getImages = (query) => {
   toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
@@ -68,12 +67,10 @@ const selectItem = (event, img) => {
   if (item === -1) {
     element.classList.add('added');
     sliders.push(img);
-
   }
   else {
     sliders.splice(item, 1);
     element.classList.remove('added');
-
   }
   errorText.style.display = 'none';
 }
@@ -103,7 +100,6 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
 
-
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -112,7 +108,6 @@ const createSlider = () => {
     alt="">`;
     sliderContainer.appendChild(item)
   })
-
 
   changeSlide(0)
 
@@ -177,6 +172,4 @@ const toggleSpinner = (show) => {
     spinner.classList.add('d-none');
     spinner.classList.add('d-md-none');
   }
-
-
 }
