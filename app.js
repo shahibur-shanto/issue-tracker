@@ -7,18 +7,23 @@ const sliderContainer = document.getElementById('sliders');
 const inputText = document.getElementById('search');
 const errorText = document.getElementById('error');
 const spinner = document.getElementById('spinner');
+const durationInput = document.getElementById('duration');
 
 // selected image 
 let sliders = [];
 
-// let go = document.getElementById("go");
-// let txt = document.getElementById("txt");
-
 inputText.addEventListener("keypress", function (event) {
   if (event.key == 'Enter')
     searchBtn.click();
+  durationInput.value = "";
+
 });
 
+durationInput.addEventListener("keypress", function (event) {
+  if (event.key == 'Enter')
+    sliderBtn.click();
+    durationInput.value = "";
+});
 
 // If this key doesn't work
 // Find the name in the url and go to their website
@@ -33,6 +38,7 @@ const showImages = (images) => {
   else {
     imagesArea.style.display = 'block';
     errorText.style.display = 'none';
+    durationInput.value = "";
     gallery.innerHTML = '';
     // show gallery title
     galleryHeader.style.display = 'flex';
@@ -62,13 +68,12 @@ const selectItem = (event, img) => {
   if (item === -1) {
     element.classList.add('added');
     sliders.push(img);
-    console.log(sliders);
-  } 
+
+  }
   else {
     sliders.splice(item, 1);
-    console.log(sliders);
     element.classList.remove('added');
-    
+
   }
   errorText.style.display = 'none';
 }
@@ -90,32 +95,31 @@ const createSlider = () => {
 
   sliderContainer.appendChild(prevNext)
   document.querySelector('.main').style.display = 'block';
-  const duration = document.getElementById('duration').value || 1000;
-  if (duration < 0) {
-    alert("You can not set negative timer.");
+  let duration = document.getElementById('duration').value || 1000;
+  if (duration < 1000) {
+    duration = 1000;
   }
-  else {
-    // hide image aria
-    imagesArea.style.display = 'none';
+
+  // hide image aria
+  imagesArea.style.display = 'none';
 
 
-    sliders.forEach(slide => {
-      let item = document.createElement('div')
-      item.className = "slider-item";
-      item.innerHTML = `<img class="w-100"
+  sliders.forEach(slide => {
+    let item = document.createElement('div')
+    item.className = "slider-item";
+    item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-      sliderContainer.appendChild(item)
-    })
+    sliderContainer.appendChild(item)
+  })
 
 
-    changeSlide(0)
+  changeSlide(0)
 
-    timer = setInterval(function () {
-      slideIndex++;
-      changeSlide(slideIndex);
-    }, duration);
-  }
+  timer = setInterval(function () {
+    slideIndex++;
+    changeSlide(slideIndex);
+  }, duration);
 }
 
 // change slider index 
@@ -163,16 +167,16 @@ const errorMessage = () => {
   toggleSpinner(false);
 }
 
-const toggleSpinner = (show)=>{
+const toggleSpinner = (show) => {
   const spinner = document.getElementById("spinner");
-  if(show){
+  if (show) {
     spinner.classList.remove('d-none');
     spinner.classList.remove('d-md-none');
   }
-  else{
+  else {
     spinner.classList.add('d-none');
     spinner.classList.add('d-md-none');
   }
-  
-  
+
+
 }
